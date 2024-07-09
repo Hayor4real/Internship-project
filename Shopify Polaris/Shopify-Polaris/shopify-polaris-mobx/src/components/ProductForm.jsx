@@ -18,6 +18,8 @@ const ProductForm = observer(() => {
   return (
     <Page title="Create Product">
       <Card sectioned>
+        {store.error && <Banner status="critical">{store.error}</Banner>}
+        {store.success && <Banner status="success">{store.success}</Banner>}
         <Form onSubmit={store.handleSubmit}>
           <FormLayout>
             <TextField
