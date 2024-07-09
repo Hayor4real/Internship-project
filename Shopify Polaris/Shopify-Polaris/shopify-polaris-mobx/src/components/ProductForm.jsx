@@ -18,24 +18,32 @@ const ProductForm = observer(() => {
   return (
     <Page title="Create Product">
       <Card sectioned>
-        <Form>
+        <Form onSubmit={store.handleSubmit}>
           <FormLayout>
-            <TextField label="Title" value={store.title} autoComplete="off" />
+            <TextField
+              label="Title"
+              value={store.title}
+              onChange={(value) => store.handleChange("title", value)}
+              autoComplete="off"
+            />
             <TextField
               label="Price"
               value={store.price}
+              onChange={(value) => store.handleChange("price", value)}
               autoComplete="off"
               type="number"
             />
             <TextField
               label="Stock Quantity"
               value={store.stockQuantity}
+              onChange={(value) => store.handleChange("stockQuantity", value)}
               autoComplete="off"
               type="number"
             />
             <TextField
               label="Description"
               value={store.description}
+              onChange={(value) => store.handleChange("description", value)}
               autoComplete="off"
               multiline={4}
             />
