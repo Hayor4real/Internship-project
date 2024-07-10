@@ -11,7 +11,6 @@ import {
 } from "@shopify/polaris";
 import { useStore } from "../stores/ProductStore";
 
-// ProductForm component for creating a new product
 const ProductForm = observer(() => {
   const store = useStore();
 
