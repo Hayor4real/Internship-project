@@ -48,25 +48,40 @@ class ProductStore {
   }
 
   // Bound action to handle form submission
-  handleSubmit() {
+  async handleSubmit() {
     if (this.validate()) {
-      // Simulate an API call
-      setTimeout(() => {
-        if (Math.random() > 0.5) {
-          this.setSuccess("Product created successfully");
-        } else {
-          this.setError("Failed to create product");
+      try {
+        const payload = {
+          title: this.title,
+          price: Number(this.price),
+          stockQuantity: Number(this.stockQuantity),
+          description: this.description,
+        };
+        console.log("Request Payload:", payload);
+        const response = await fetch("http://localhost:3333/products", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to create product");
         }
-      }, 1000);
+
+        const data = await response.json();
+        this.setSuccess("Product created successfully");
+      } catch (error) {
+        this.setError("Failed to create product");
+      }
     }
   }
-
   // Action to set error message
   setError(message) {
     this.error = message;
     this.success = "";
   }
-
   // Action to set success message
   setSuccess(message) {
     this.success = message;
@@ -74,8 +89,6 @@ class ProductStore {
   }
 }
 
-// Create a context for the ProductStore
 const StoreContext = createContext(new ProductStore());
 
-// Hook to use the ProductStore context
 export const useStore = () => useContext(StoreContext);
